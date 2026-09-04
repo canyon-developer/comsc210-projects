@@ -33,7 +33,7 @@ Restaurant addRestaurant() {
     cout << "What is its address: ";
     getline(cin, restaurant.address);
 
-    cout << "What is its style: ";
+    cout << "What is its style (Italian/French/Chinese/...): ";
     getline(cin, restaurant.style);
 
     cout << "Is pet allowed (y/n)?: ";
@@ -43,4 +43,13 @@ Restaurant addRestaurant() {
     getline(cin, restaurant.onlineOrderOffered);
 
     return restaurant;
+}
+
+void restaurantInfo(Restaurant& restaurant) {
+    cout << "---------- Restaurant Info ----------" << endl;
+    cout << "Name:                 " << restaurant.name << endl;
+    cout << "Address:              " << restaurant.address << endl;
+    cout << "Style:                " << restaurant.address << endl;
+    cout << "Pet Policy:           " << restaurant.petAllowed << endl;
+    cout << "Online order offered: " << restaurant.onlineOrderOffered << endl;
 }
