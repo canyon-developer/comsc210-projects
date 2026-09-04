@@ -17,9 +17,13 @@ int main() {
     const int NUMBER = 4;
     Restaurant restaurants[NUMBER]; // 4 restaurnants
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < NUMBER; i++) {
         cout << "Populate restaurant info for the " << i + 1 << " restaurant:" << endl;
         restaurants[i] = addRestaurant();
+    }
+
+    for (int i = 0; i < NUMBER; i++) {
+        restaurantInfo(restaurants[i]);
     }
 
     return 0;
