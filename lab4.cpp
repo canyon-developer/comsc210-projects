@@ -1,3 +1,4 @@
+#include <ctime>
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -15,6 +16,8 @@ int main() {
     cout << "--------------------------------------" << endl;
     
     vector<Color> colors;
+
+    srand(time(NULL));
     int n = rand() % 26 + 25;
 
     for (int i = 0; i < n; i++) {
