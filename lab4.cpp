@@ -25,4 +25,9 @@ int main() {
 
        colors.push_back(c);
     }
+
+    for (int i = 0; i < n; i++) {
+      Color c = colors[i];
+      cout << left << setw(10) << i + 1 << setw(10) << c.red << setw(10) << c.green << setw(10) << c.blue << endl;
+    }
 }
