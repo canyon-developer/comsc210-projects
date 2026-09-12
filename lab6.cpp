@@ -40,5 +40,7 @@ int main() {
     double array_sum = sumArray(array, SIZE);
     cout << "Sum of values: " << array_sum << endl;
 
+    delete [] array;
+
     return 0;
 }
