@@ -21,11 +21,24 @@ void outputArrayData(double *array, int size) {
     }
     cout << array[size - 1] << endl;
 }
+
+double sumArray(double *array, int size) {
+    double sum = 0.0;
+    for (int i = 0; i < size; i++) {
+        sum = sum + array[i];
+    }
+
+    return sum;
+}
+
 int main() {
     double *array = new double[SIZE];
 
     enterArrayData(array, SIZE);
     outputArrayData(array, SIZE);
+
+    double array_sum = sumArray(array, SIZE);
+    cout << "Sum of values: " << array_sum << endl;
 
     return 0;
 }
