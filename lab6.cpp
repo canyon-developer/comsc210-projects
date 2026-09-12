@@ -16,10 +16,10 @@ void enterArrayData(double *array, int size) {
 
 void outputArrayData(double *array, int size) {
     cout << "Outputting " << size << " array elements: ";
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size - 1; i++) {
         cout << array[i] << " ";
     }
-    cout << endl;
+    cout << array[size - 1] << endl;
 }
 int main() {
     double *array = new double[SIZE];
