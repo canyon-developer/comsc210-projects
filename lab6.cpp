@@ -5,11 +5,13 @@ using namespace std;
 const int SIZE = 5;
 
 void enterArrayData(double *array, int size) {
-    cout << "Please input " << size << " double value(s)." << endl;
+    cout << "Data entry for the array with size " << size << " :" << endl;
 
     for (int i = 0; i < size; i++) {
-      cin >> array[i];
+        cout << "    > Element #" << i << ": ";
+        cin >> array[i];
     }
+    cout << "Data entry complete." << endl;
 }
 
 int main() {
