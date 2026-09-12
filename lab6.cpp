@@ -14,10 +14,18 @@ void enterArrayData(double *array, int size) {
     cout << "Data entry complete." << endl;
 }
 
+void outputArrayData(double *array, int size) {
+    cout << "Outputting " << size << " array elements: ";
+    for (int i = 0; i < size; i++) {
+        cout << array[i] << " ";
+    }
+    cout << endl;
+}
 int main() {
     double *array = new double[SIZE];
 
     enterArrayData(array, SIZE);
+    outputArrayData(array, SIZE);
 
     return 0;
 }
