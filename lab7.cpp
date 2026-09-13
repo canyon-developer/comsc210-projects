@@ -15,6 +15,13 @@ string* reverseArray(string *array, int size) {
     return array;
 }
 
+void displayArray(string *array, int size) {
+    for (int i = 0; i < size; i++) {
+      cout << array[i] << " ";
+    }
+    cout << endl;
+}
+
 int main() {
   const int SIZE = 5;
   string *array = new string[SIZE];
@@ -23,4 +30,6 @@ int main() {
   array[2] = "Kevin";
   array[3] = "Amy";
   array[4] = "Kytelyn";
+
+  displayArray(array, SIZE);
 }
