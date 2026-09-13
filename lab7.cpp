@@ -31,5 +31,10 @@ int main() {
   array[3] = "Amy";
   array[4] = "Kytelyn";
 
+  cout << "Original array: ";
+  displayArray(array, SIZE);
+
+  reverseArray(array, SIZE);
+  cout << "Reversed array: ";
   displayArray(array, SIZE);
 }
