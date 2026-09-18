@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <vector>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ void array_demonstration(array<double, SIZE>& double_array) {
     cout << "2. Max size: " << double_array.max_size() << endl;
 
     cout << "3. Values: ";
-    for (double val : double_array) cout << val << " " << endl;
+    for (double val : double_array) cout << val << " ";
 
     cout << "4. Element 5: " << double_array[5] << endl;
     cout << "5. Element 5: " << double_array.at(5) << endl;
@@ -57,7 +58,7 @@ void vector_demonstration(vector<double>& double_vector) {
     cout << "2. Max size: " << double_vector.max_size() << endl;
 
     cout << "3. Values: ";
-    for (double val : double_vector) cout << val << " " << endl;
+    for (double val : double_vector) cout << val << " ";
 
     cout << "4. Element 5: " << double_vector[5] << endl;
     cout << "5. Element 5: " << double_vector.at(5) << endl;
@@ -117,4 +118,5 @@ int main() {
     array_demonstration(double_array);
     vector_demonstration(double_vector);
     
+    return 0;
 }
