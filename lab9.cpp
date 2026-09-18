@@ -30,11 +30,13 @@ int main() {
 
     cout << "1. Size: " << double_array.size() << endl;
 
-    cout << "2. Values: ";
+    cout << "2. Max size: " << double_array.max_size() << endl;
+
+    cout << "3. Values: ";
     for (double val : double_array) cout << val << " " << endl;
 
-    cout << "3. Element 5: " << double_array[5] << endl;
-    cout << "3. Element 5: " << double_array.at(5) << endl;
+    cout << "4. Element 5: " << double_array[5] << endl;
+    cout << "5. Element 5: " << double_array.at(5) << endl;
     
     srand(time(nullptr));
     cout << "6. Random element: " << double_array[rand()%SIZE] << endl;
@@ -50,4 +52,21 @@ int main() {
     cout << "10. Reverse sorted: ";
     reverse(double_array.rbegin(), double_array.rend());
     for (double val : double_array) cout << val << " "; cout << endl;
+
+    cout << "11. Memory address: " << double_array.data() << endl;
+
+    cout << "12. Is empty: ";
+    if (double_array.empty()) cout << "Yes" << endl;
+    else cout << "No" << endl;
+
+    cout << "13. Max element: ";
+    cout << *max_element(double_array.begin(), double_array.end()) << endl;
+
+    cout << "14. Min element: ";
+    cout << *min_element(double_array.begin(), double_array.end()) << endl;
+
+    cout << "15. Array sum: ";
+    cout << accumulate(double_array.begin(), double_array.end(), 0) << endl;
+
+
 }
