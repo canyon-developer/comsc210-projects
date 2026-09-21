@@ -65,7 +65,7 @@ int main() {
     // These sample arrays let the demonstration cover zero, one, and several
     // mileage records.
     double singlemileages[] = {8000};
-    double multiplemileages[] = {12000, 5000, 10500, 4000};
+    double multiplemileages[] = {12000, 125000, 135000, 144000};
 
     setCar(carRecord[0], 101, "CR-V", 20000, nullptr, 0);
     setCar(carRecord[1], 102, "RAV4", 25000, singlemileages, 1);
