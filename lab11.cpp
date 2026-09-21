@@ -34,6 +34,26 @@ void setCar(Car& car, int id, const string& model, double price,
     }
 }
 
+// Display car information
+void displayCar(const Car& car) {
+    cout << "Car #" << car.id << ": " << car.model << '\n';
+    cout << "  Price: $" << fixed << car.price << '\n';
+    cout << "  Recorded mileages: ";
+
+    if (car.mileageCount == 0) {
+        cout << "none";
+    } else {
+        for (int i = 0; i < car.mileageCount; ++i) {
+            cout << car.mileages[i] << " cm";
+            if (i < car.mileageCount - 1) {
+                cout << ", ";
+            }
+        }
+    }
+
+    cout << endl;
+}
+
 int main() {
 
   return 0;
