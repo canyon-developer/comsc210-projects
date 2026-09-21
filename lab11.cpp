@@ -44,7 +44,7 @@ void displayCar(const Car& car) {
         cout << "none";
     } else {
         for (int i = 0; i < car.mileageCount; ++i) {
-            cout << car.mileages[i] << " cm";
+            cout << car.mileages[i] << " miles";
             if (i < car.mileageCount - 1) {
                 cout << ", ";
             }
@@ -55,6 +55,37 @@ void displayCar(const Car& car) {
 }
 
 int main() {
+    // The number of cars, here it is kept small and fixed
+    // so the sample output is easy to follow.
+    const int carCount = 3;
 
-  return 0;
+    // The carRecord itself is a dynamic array of Car structs.
+    Car* carRecord = new Car[carCount];
+
+    // These sample arrays let the demonstration cover zero, one, and several
+    // mileage records.
+    double singlemileages[] = {8000};
+    double multiplemileages[] = {12000, 5000, 10500, 4000};
+
+    setCar(carRecord[0], 101, "CR-V", 20000, nullptr, 0);
+    setCar(carRecord[1], 102, "RAV4", 25000, singlemileages, 1);
+    setCar(carRecord[2], 103, "Model Y", 35000, multiplemileages, 4);
+
+    cout << "Car Record\n";
+    cout << "=================" << endl << endl;
+
+    // Walk through the outer dynamic array and print all three structs.
+    for (int i = 0; i < carCount; ++i) {
+        displayCar(carRecord[i]);
+    }
+
+    // Every call to new[] needs a matching delete[].
+    for (int i = 0; i < carCount; ++i) {
+        delete[] carRecord[i].mileages;
+        carRecord[i].mileages = nullptr;
+    }
+
+    delete[] carRecord;
+    carRecord = nullptr;
+    return 0;
 }
