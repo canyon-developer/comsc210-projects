@@ -47,4 +47,9 @@ int main() {
     for (int i = 0; i < student_grades.size(); i++) {
         cout << student_grades[i].id << "  " << student_grades[i].grade << endl;
     }
+
+    ofstream output("sorted_grades.txt");
+    for (int i = 0; i < student_grades.size(); i++) {
+        output << student_grades[i].id << " " << student_grades[i].grade << endl;
+    }
 }
