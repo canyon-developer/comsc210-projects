@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -13,8 +14,16 @@ int main() {
     vector<Student> student_grades;
 
     ifstream file("210-lab-13-grades.txt");
-    string line;
-    while (getline(file, line)) {
-        
+    if (!file.is_open()) {
+        cout << "Error opening file" << endl;
+    }
+    
+    long id;
+    float grade;
+    while (file >> id >> grade) {
+        Student record;
+        record.id = id;
+        record.grade = grade;
+        student_grades.push_back(record);
     }
 }
