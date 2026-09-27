@@ -1,5 +1,4 @@
 #include <iostream>
-#include <random>
 #include <vector>
 
 using namespace std;
@@ -39,6 +38,10 @@ int main() {
         color.set_color(red, green, blue);
         colors.push_back(color);
     }
-    
+
+    cout << "---- " << colors.size() << " colors ----" << endl;
+    for (int i = 0; i < size; i++) {
+        colors[i].print();
+    }
 
 }
