@@ -1,4 +1,6 @@
 #include <iostream>
+#include <random>
+#include <vector>
 
 using namespace std;
 
@@ -24,5 +26,19 @@ public:
 };
 
 int main() {
+    int size = 10;
+    vector<Color> colors;
+
+    srand(time(nullptr));
+    for (int i = 0; i < size; i++) {
+        int red = rand() % 256;
+        int green = rand() % 256;
+        int blue = rand() % 256;
+
+        Color color;
+        color.set_color(red, green, blue);
+        colors.push_back(color);
+    }
+    
 
 }
