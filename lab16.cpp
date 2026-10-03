@@ -10,7 +10,7 @@ private:
     int blue;
 
   public:
-    Color() {}
+    Color() { red = 0; green = 0; blue = 0; }
     Color(int r) {
       red = r;
       green = 0;
@@ -37,22 +37,18 @@ private:
 };
 
 int main() {
-    int size = 10;
     vector<Color> colors;
 
-    srand(time(nullptr));
-    for (int i = 0; i < size; i++) {
-        int red = rand() % 256;
-        int green = rand() % 256;
-        int blue = rand() % 256;
+    Color c1;
+    Color c2(100);
+    Color c3(150, 150, 150);
 
-        Color color;
-        color.set_color(red, green, blue);
-        colors.push_back(color);
-    }
+    colors.push_back(c1);
+    colors.push_back(c2);
+    colors.push_back(c3);
 
     cout << "---- " << colors.size() << " colors ----" << endl;
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < colors.size(); i++) {
         colors[i].print();
     }
 
