@@ -8,24 +8,12 @@ struct Node {
     Node *next;
 };
 
-Node *createLinkedList(int size) {}
-
-void deleteEntry(int entry) {}
-
-void insertAfter(int entry) {}
-
-void deleteLinkedList(Node *& head) {}
-
-
-
-void output(Node *);
-
-int main() {
+Node *createLinkedList(int size) {
     Node *head = nullptr;
     int count = 0;
 
     // create a linked list of size SIZE with random numbers 0-99
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < size; i++) {
         int tmp_val = rand() % 100;
         Node *newVal = new Node;
         
@@ -41,14 +29,11 @@ int main() {
             head = newVal;
         }
     }
-    output(head);
 
-    // deleting a node
-    cout << "Which node to delete? " << endl;
-    output(head);
-    int entry;
-    cout << "Choice --> ";
-    cin >> entry;
+    return head;
+}
+
+void deleteEntry(Node *& head, int entry) {
 
     // traverse that many times and delete that node
     Node *current = head;
@@ -70,21 +55,11 @@ int main() {
         delete current;
         current = nullptr;
     }
-    output(head);
+}
 
-    // insert a node
-    cout << "After which node to insert 10000? " << endl;
-    count = 1;
-    current = head;
-    while (current) {
-        cout << "[" << count++ << "] " << current->value << endl;
-        current = current->next;
-    }
-    cout << "Choice --> ";
-    cin >> entry;
-
-    current = head;
-    prev = nullptr;  // reset prev to nullptr for same reason
+void insertAfter(Node *& head, int entry) {
+    Node *current = head;
+    Node *prev = nullptr;  // reset prev to nullptr for same reason
 
     for (int i = 0; i < entry; i++) {
         prev = current;
@@ -102,16 +77,51 @@ int main() {
     } else {
         prev->next = newnode;
     }
-    output(head);
+}
 
-    // deleting the linked list
-    current = head;
+void deleteLinkedList(Node *&head) {
+    Node *current = head;
     while (current) {
         head = current->next;
         delete current;
         current = head;
     }
     head = nullptr;
+}
+
+
+
+void output(Node *);
+
+int main() {
+    Node *head = createLinkedList(SIZE);
+    output(head);
+
+    // deleting a node
+    cout << "Which node to delete? " << endl;
+    output(head);
+    cout << "Choice --> ";
+    int entry;
+    cin >> entry;
+    deleteEntry(head, entry);
+    
+    output(head);
+
+    // insert a node
+    cout << "After which node to insert 10000? " << endl;
+    int count = 1;
+    Node *current = head;
+    while (current) {
+        cout << "[" << count++ << "] " << current->value << endl;
+        current = current->next;
+    }
+    cout << "Choice --> ";
+    cin >> entry;
+    insertAfter(head, entry);
+    output(head);
+
+    // deleting the linked list
+    deleteLinkedList(head);
     output(head);
 
     return 0;
