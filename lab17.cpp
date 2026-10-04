@@ -8,6 +8,16 @@ struct Node {
     Node *next;
 };
 
+Node *createLinkedList(int size) {}
+
+void deleteEntry(int entry) {}
+
+void insertAfter(int entry) {}
+
+void deleteLinkedList(Node *& head) {}
+
+
+
 void output(Node *);
 
 int main() {
