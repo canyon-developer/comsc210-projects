@@ -1,12 +1,14 @@
 #include <iostream>
 using namespace std;
 
-const int SIZE = 7;  
+const int SIZE = 7;
 
 struct Node {
     float value;
     Node *next;
 };
+
+void output(Node *);
 
 Node *createLinkedList(int size) {
     Node *head = nullptr;
@@ -33,7 +35,12 @@ Node *createLinkedList(int size) {
     return head;
 }
 
-void deleteEntry(Node *& head, int entry) {
+void deleteEntry(Node *& head) {
+    cout << "Which node to delete? " << endl;
+    output(head);
+    cout << "Choice --> ";
+    int entry;
+    cin >> entry;
 
     // traverse that many times and delete that node
     Node *current = head;
@@ -57,8 +64,19 @@ void deleteEntry(Node *& head, int entry) {
     }
 }
 
-void insertAfter(Node *& head, int entry) {
+void insertAfter(Node *& head) {
+    cout << "After which node to insert 10000? " << endl;
+    int count = 1;
     Node *current = head;
+    while (current) {
+        cout << "[" << count++ << "] " << current->value << endl;
+        current = current->next;
+    }
+    cout << "Choice --> ";
+    int entry;
+    cin >> entry;
+
+    current = head;
     Node *prev = nullptr;  // reset prev to nullptr for same reason
 
     for (int i = 0; i < entry; i++) {
@@ -91,38 +109,41 @@ void deleteLinkedList(Node *&head) {
 
 
 
-void output(Node *);
 
 int main() {
     Node *head = createLinkedList(SIZE);
     output(head);
 
-    // deleting a node
-    cout << "Which node to delete? " << endl;
-    output(head);
-    cout << "Choice --> ";
-    int entry;
-    cin >> entry;
-    deleteEntry(head, entry);
-    
-    output(head);
+    do {
+      cout << "Choose action:" << endl;
+      cout << "    [1] Add a node to front" << endl;
+      cout << "    [2] Add a node to end" << endl;
+      cout << "    [3] Delete a node" << endl;
+      cout << "    [4] Insert a node" << endl;
+      cout << "    [5] Delete the list" << endl;
+      cout << "    [6] Print the list" << endl;
+      cout << "    [7] Exit" << endl;
 
-    // insert a node
-    cout << "After which node to insert 10000? " << endl;
-    int count = 1;
-    Node *current = head;
-    while (current) {
-        cout << "[" << count++ << "] " << current->value << endl;
-        current = current->next;
-    }
-    cout << "Choice --> ";
-    cin >> entry;
-    insertAfter(head, entry);
-    output(head);
-
-    // deleting the linked list
-    deleteLinkedList(head);
-    output(head);
+      int action;
+      cin >> action;
+      if (action == 1) {
+          insertAfter(head);
+      } else if (action == 2) {
+          insertAfter(head);
+      } else if (action == 3) {
+          deleteEntry(head);
+      } else if (action == 4) {
+          insertAfter(head);
+      } else if (action == 5) {
+          deleteEntry(head);
+      } else if (action == 6) {
+          output(head);
+      } else if (action == 7) {
+          break;
+      } else {
+          cout << "Wrong choice." << endl;
+      }
+    } while (true);
 
     return 0;
 }
