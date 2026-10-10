@@ -12,7 +12,6 @@ private:
     double *prices;
 
 public:
-    // Step 1: The default constructor creates random chair data.
     Chair() {
         const int MIN = 10000, MAX = 99999;
 
@@ -22,7 +21,6 @@ public:
             prices[i] = (rand() % (MAX - MIN + 1) + MIN) / (double) 100;
     }
 
-    // Step 2: This constructor receives the legs and all three prices.
     Chair(int l, const double p[]) {
         prices = new double[SIZE];
         legs = l;
@@ -80,16 +78,12 @@ int main() {
     delete livingChair;
     livingChair = nullptr;
 
-    // The array still uses setters in this step.
+    cout << "STEP 3 - DEFAULT-CONSTRUCTED CHAIR ARRAY\n";
     Chair *collection = new Chair[SIZE];
-    collection[0].setLegs(4);
-    collection[0].setPrices(441.41, 552.52, 663.63);
-    collection[1].setLegs(4);
-    collection[1].setPrices(484.84, 959.59, 868.68);
-    collection[2].setLegs(4);
-    collection[2].setPrices(626.26, 515.15, 757.57);
-    for (int i = 0; i < SIZE; i++)
+    for (int i = 0; i < SIZE; i++) {
+        cout << "Chair " << i + 1 << ":\n";
         collection[i].print();
+    }
     delete [] collection;
     collection = nullptr;
 
