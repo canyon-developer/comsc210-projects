@@ -1,5 +1,3 @@
-# by Guimei Lin
-
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
@@ -24,11 +22,12 @@ public:
             prices[i] = (rand() % (MAX - MIN + 1) + MIN) / (double) 100;
     }
 
-    Chair(int l) {
+    // Step 2: This constructor receives the legs and all three prices.
+    Chair(int l, const double p[]) {
         prices = new double[SIZE];
         legs = l;
         for (int i = 0; i < SIZE; i++)
-            prices[i] = 0;
+            prices[i] = p[i];
     }
 
     ~Chair() { delete [] prices; }
@@ -74,9 +73,9 @@ int main() {
     delete chairPtr;
     chairPtr = nullptr;
 
-    // The original parameter constructor is unchanged in this step.
-    Chair *livingChair = new Chair(3);
-    livingChair->setPrices(525.25, 434.34, 252.52);
+    cout << "STEP 2 - TWO-PARAMETER CONSTRUCTOR\n";
+    double livingChairPrices[SIZE] = {525.25, 434.34, 252.52};
+    Chair *livingChair = new Chair(3, livingChairPrices);
     livingChair->print();
     delete livingChair;
     livingChair = nullptr;
