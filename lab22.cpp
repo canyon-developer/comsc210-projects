@@ -120,9 +120,7 @@ public:
         }
 
         if (temp == tail) {
-            tail = temp->prev;
-            tail->next = nullptr;
-            delete temp;
+            pop_back();
             return;
         }
 
@@ -141,6 +139,20 @@ public:
             head->prev = nullptr;
         else
             tail = nullptr; // The list is now empty
+
+        delete temp;
+    }
+
+    void pop_back() {
+        if (!tail) return; // Empty list
+
+        Node* temp = tail;
+        tail = tail->prev;
+
+        if (tail)
+            tail->next = nullptr;
+        else
+            head = nullptr; // The list is now empty
 
         delete temp;
     }
@@ -176,9 +188,9 @@ public:
 int main() {
     DoublyLinkedList list;
 
-    for (int value = 10; value <= 50; value += 10)
+    cout << "STEP 3 - adds pop_back() and completes the class\n";
+    for (int value = 10; value <= 60; value += 10)
         list.push_back(value);
-    cout << "STEP 2 - adds pop_front()\n";
     cout << "Original list:                  ";
     list.print();
 
@@ -190,31 +202,53 @@ int main() {
     list.delete_pos(0);
     list.print();
 
-    cout << "Delete position 2 (tail):        ";
-    list.delete_pos(2);
+    cout << "Delete position 3 (tail):        ";
+    list.delete_pos(3);
     list.print();
+
+    cout << "Reverse after position deletes:  ";
+    list.print_reverse();
 
     cout << "After pop_front():               ";
     list.pop_front();
     list.print();
 
-    cout << "pop_front() on the last node:    ";
-    list.pop_front();
+    cout << "After pop_back():                ";
+    list.pop_back();
     list.print();
 
-    list.pop_front(); // Safe on an empty list
-    cout << "After pop_front() when empty:    ";
-    list.print();
+    cout << "Invalid delete_pos(99):          ";
+    list.delete_pos(99);
 
-    list.push_back(60);
-    list.push_front(50);
+    cout << "Invalid delete_pos(-1):          ";
+    list.delete_pos(-1);
+
+    list.push_front(30);
+    list.push_front(20);
+    list.push_front(10);
     cout << "Rebuilt list:                    ";
     list.print();
 
-    cout << "delete_val(50), the head:        ";
-    list.delete_val(50);
+    cout << "delete_val(10), the head:        ";
+    list.delete_val(10);
+    list.print();
+
+    cout << "delete_val(30), middle node:     ";
+    list.delete_val(30);
+    list.print();
+
+    cout << "delete_val(40), the tail:        ";
+    list.delete_val(40);
+    list.print();
+
+    cout << "pop_back() on the last node:     ";
+    list.pop_back();
+    list.print();
+
+    list.pop_front(); // Safe on an empty list
+    list.pop_back();  // Safe on an empty list
+    cout << "After pops on an empty list:     ";
     list.print();
 
     return 0;
 }
-
