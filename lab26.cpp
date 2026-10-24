@@ -1,3 +1,6 @@
+// Lab 26: Compare common operations on vector, list, and set containers.
+// Each race is run 15 times, and the average time is reported in microseconds.
+
 #include <algorithm>
 #include <chrono>
 #include <fstream>
@@ -13,28 +16,39 @@
 
 using namespace std;
 
-using Nanoseconds = long long;
+using Microseconds = long long;
 
 const string DATA_FILE = "names.txt";
 const size_t EXPECTED_NAME_COUNT = 20000;
 const int NUMBER_OF_RUNS = 15;
 const int RACE_COUNT = 4;
 const int CONTAINER_COUNT = 3;
+const string TEST_NAME = "TESTNAME";
 
+// The first cube slice stores one run. The second stores the running totals.
 enum DataSlice {
     CURRENT_RUN,
     ACCUMULATED_TOTALS,
     DATA_SLICE_COUNT
 };
 
+// Each column in a race row belongs to one container type.
+enum ContainerColumn {
+    VECTOR_COLUMN,
+    LIST_COLUMN,
+    SET_COLUMN
+};
+
+// Run any callable operation and return its elapsed time in microseconds.
 template <typename Operation>
-Nanoseconds timeOperation(Operation operation) {
+Microseconds timeOperation(Operation operation) {
     const auto start = chrono::steady_clock::now();
     operation();
     const auto stop = chrono::steady_clock::now();
-    return chrono::duration_cast<chrono::nanoseconds>(stop - start).count();
+    return chrono::duration_cast<chrono::microseconds>(stop - start).count();
 }
 
+// Read and validate the input file, passing each name to the supplied function.
 template <typename StoreName>
 void readNames(StoreName storeName) {
     ifstream input(DATA_FILE);
@@ -55,13 +69,15 @@ void readNames(StoreName storeName) {
     }
 }
 
+// A race contains the same operation implemented by each container type.
 struct Race {
-    function<Nanoseconds()> runVector;
-    function<Nanoseconds()> runList;
-    function<Nanoseconds()> runSet;
+    function<Microseconds()> runVector;
+    function<Microseconds()> runList;
+    function<Microseconds()> runSet;
 };
 
-void runExperiment(Nanoseconds results[RACE_COUNT][CONTAINER_COUNT]) {
+// Run the read, sort, insert, and delete races once in dependency order.
+void runExperiment(Microseconds results[RACE_COUNT][CONTAINER_COUNT]) {
     vector<string> vectorContestant;
     list<string> listContestant;
     set<string> setContestant;
@@ -102,6 +118,7 @@ void runExperiment(Nanoseconds results[RACE_COUNT][CONTAINER_COUNT]) {
                 });
             },
             []() {
+                // A set maintains sort order automatically, so no sort is needed.
                 return 0;
             }
         },
@@ -110,19 +127,19 @@ void runExperiment(Nanoseconds results[RACE_COUNT][CONTAINER_COUNT]) {
                 return timeOperation([&]() {
                     vectorContestant.insert(
                         vectorContestant.begin() + vectorContestant.size() / 2,
-                        "TESTNAME");
+                        TEST_NAME);
                 });
             },
             [&]() {
                 return timeOperation([&]() {
                     auto middle = listContestant.begin();
                     advance(middle, listContestant.size() / 2);
-                    listContestant.insert(middle, "TESTNAME");
+                    listContestant.insert(middle, TEST_NAME);
                 });
             },
             [&]() {
                 return timeOperation([&]() {
-                    setContestant.insert("TESTNAME");
+                    setContestant.insert(TEST_NAME);
                 });
             }
         },
@@ -151,14 +168,15 @@ void runExperiment(Nanoseconds results[RACE_COUNT][CONTAINER_COUNT]) {
     };
 
     for (int race = 0; race < RACE_COUNT; ++race) {
-        results[race][0] = races[race].runVector();
-        results[race][1] = races[race].runList();
-        results[race][2] = races[race].runSet();
+        results[race][VECTOR_COLUMN] = races[race].runVector();
+        results[race][LIST_COLUMN] = races[race].runList();
+        results[race][SET_COLUMN] = races[race].runSet();
     }
 }
 
+// Display the average time for every operation/container combination.
 void printAverages(
-    const Nanoseconds raceData[DATA_SLICE_COUNT][RACE_COUNT][CONTAINER_COUNT]) {
+    const Microseconds raceData[DATA_SLICE_COUNT][RACE_COUNT][CONTAINER_COUNT]) {
     const string operationNames[RACE_COUNT] = {
         "Read", "Sort", "Insert", "Delete"
     };
@@ -184,9 +202,8 @@ void printAverages(
 }
 
 int main() {
-    // Slice CURRENT_RUN holds the 4-by-3 results from one experiment.
-    // Slice ACCUMULATED_TOTALS holds the running sum of those same positions.
-    Nanoseconds raceData[DATA_SLICE_COUNT][RACE_COUNT][CONTAINER_COUNT] = {};
+    // Each 4-by-3 slice is organized as [race][container].
+    Microseconds raceData[DATA_SLICE_COUNT][RACE_COUNT][CONTAINER_COUNT] = {};
 
     try {
         for (int run = 0; run < NUMBER_OF_RUNS; ++run) {
