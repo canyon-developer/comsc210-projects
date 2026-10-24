@@ -102,7 +102,7 @@ void runExperiment(Nanoseconds results[RACE_COUNT][CONTAINER_COUNT]) {
                 });
             },
             []() {
-                return -1;
+                return 0;
             }
         },
         {
@@ -162,18 +162,20 @@ void printAverages(
     const string operationNames[RACE_COUNT] = {
         "Read", "Sort", "Insert", "Delete"
     };
-    constexpr int COLUMN_WIDTH = 16;
+    constexpr int OPERATION_WIDTH = 18;
+    constexpr int RESULT_WIDTH = 12;
 
-    cout << "Average times over " << NUMBER_OF_RUNS << " runs (nanoseconds)\n\n";
-    cout << left << setw(COLUMN_WIDTH) << "Operation"
-         << right << setw(COLUMN_WIDTH) << "Vector"
-         << setw(COLUMN_WIDTH) << "List"
-         << setw(COLUMN_WIDTH) << "Set" << '\n';
+    cout << setw(OPERATION_WIDTH + RESULT_WIDTH) << "Number of simulations:"
+         << setw(3) << NUMBER_OF_RUNS << '\n';
+    cout << setw(OPERATION_WIDTH) << "Operation"
+         << setw(RESULT_WIDTH) << "Vector"
+         << setw(RESULT_WIDTH) << "List"
+         << setw(RESULT_WIDTH) << "Set" << '\n';
 
     for (int race = 0; race < RACE_COUNT; ++race) {
-        cout << left << setw(COLUMN_WIDTH) << operationNames[race];
+        cout << setw(OPERATION_WIDTH) << operationNames[race];
         for (int container = 0; container < CONTAINER_COUNT; ++container) {
-            cout << right << setw(COLUMN_WIDTH)
+            cout << setw(RESULT_WIDTH)
                  << raceData[ACCUMULATED_TOTALS][race][container]
                         / NUMBER_OF_RUNS;
         }
