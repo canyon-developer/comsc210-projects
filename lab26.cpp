@@ -21,6 +21,12 @@ const int NUMBER_OF_RUNS = 15;
 const int RACE_COUNT = 4;
 const int CONTAINER_COUNT = 3;
 
+enum DataSlice {
+    CURRENT_RUN,
+    ACCUMULATED_TOTALS,
+    DATA_SLICE_COUNT
+};
+
 template <typename Operation>
 Nanoseconds timeOperation(Operation operation) {
     const auto start = chrono::steady_clock::now();
@@ -55,7 +61,7 @@ struct Race {
     function<Nanoseconds()> runSet;
 };
 
-void runExperiment(Nanoseconds totals[RACE_COUNT][CONTAINER_COUNT]) {
+void runExperiment(Nanoseconds results[RACE_COUNT][CONTAINER_COUNT]) {
     vector<string> vectorContestant;
     list<string> listContestant;
     set<string> setContestant;
@@ -145,13 +151,14 @@ void runExperiment(Nanoseconds totals[RACE_COUNT][CONTAINER_COUNT]) {
     };
 
     for (int race = 0; race < RACE_COUNT; ++race) {
-        totals[race][0] += races[race].runVector();
-        totals[race][1] += races[race].runList();
-        totals[race][2] += races[race].runSet();
+        results[race][0] = races[race].runVector();
+        results[race][1] = races[race].runList();
+        results[race][2] = races[race].runSet();
     }
 }
 
-void printAverages(const Nanoseconds raceData[RACE_COUNT][CONTAINER_COUNT]) {
+void printAverages(
+    const Nanoseconds raceData[DATA_SLICE_COUNT][RACE_COUNT][CONTAINER_COUNT]) {
     const string operationNames[RACE_COUNT] = {
         "Read", "Sort", "Insert", "Delete"
     };
@@ -167,18 +174,28 @@ void printAverages(const Nanoseconds raceData[RACE_COUNT][CONTAINER_COUNT]) {
         cout << left << setw(COLUMN_WIDTH) << operationNames[race];
         for (int container = 0; container < CONTAINER_COUNT; ++container) {
             cout << right << setw(COLUMN_WIDTH)
-                 << raceData[race][container] / NUMBER_OF_RUNS;
+                 << raceData[ACCUMULATED_TOTALS][race][container]
+                        / NUMBER_OF_RUNS;
         }
         cout << '\n';
     }
 }
 
 int main() {
-    Nanoseconds raceData[RACE_COUNT][CONTAINER_COUNT] = {};
+    // Slice CURRENT_RUN holds the 4-by-3 results from one experiment.
+    // Slice ACCUMULATED_TOTALS holds the running sum of those same positions.
+    Nanoseconds raceData[DATA_SLICE_COUNT][RACE_COUNT][CONTAINER_COUNT] = {};
 
     try {
         for (int run = 0; run < NUMBER_OF_RUNS; ++run) {
-            runExperiment(raceData);
+            runExperiment(raceData[CURRENT_RUN]);
+
+            for (int race = 0; race < RACE_COUNT; ++race) {
+                for (int container = 0; container < CONTAINER_COUNT; ++container) {
+                    raceData[ACCUMULATED_TOTALS][race][container]
+                        += raceData[CURRENT_RUN][race][container];
+                }
+            }
         }
 
         printAverages(raceData);
